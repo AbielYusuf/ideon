@@ -188,6 +188,12 @@ function readCookie(name: string): string | null {
   return match ? decodeURIComponent(match.slice(prefix.length)) : null;
 }
 
+function readCsrfToken(): string | null {
+  return readCookie(CSRF_COOKIE) || (
+    typeof window !== "undefined" ? window.localStorage.getItem(CSRF_COOKIE) : null
+  );
+}
+
 /**
  * Backend requests always carry the HttpOnly session cookie. State-changing
  * requests echo the readable CSRF cookie in a header (double submit).
@@ -200,7 +206,7 @@ async function apiFetch(
   const headers = new Headers(init.headers);
 
   if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
-    const csrf = readCookie(CSRF_COOKIE);
+    const csrf = readCsrfToken();
     if (csrf) {
       headers.set("X-CSRF-Token", csrf);
     }
@@ -267,6 +273,8 @@ export async function loginUser(input: LoginInput): Promise<UserProfile> {
   if (!response.ok) {
     throw new ApiError(await readApiError(response), response.status);
   }
+  const csrf = response.headers.get("X-CSRF-Token");
+  if (csrf && typeof window !== "undefined") window.localStorage.setItem(CSRF_COOKIE, csrf);
   return (await response.json()) as UserProfile;
 }
 
@@ -280,6 +288,8 @@ export async function registerUser(input: RegisterInput): Promise<UserProfile> {
   if (!response.ok) {
     throw new ApiError(await readApiError(response), response.status);
   }
+  const csrf = response.headers.get("X-CSRF-Token");
+  if (csrf && typeof window !== "undefined") window.localStorage.setItem(CSRF_COOKIE, csrf);
   return (await response.json()) as UserProfile;
 }
 

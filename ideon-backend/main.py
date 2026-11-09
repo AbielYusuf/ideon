@@ -91,6 +91,7 @@ app = FastAPI(title="Ideon API")
 ALLOWED_ORIGINS = (
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://ideon-opal.vercel.app",  # Domain Vercel kamu
 )
 
 app.add_middleware(
@@ -99,6 +100,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-CSRF-Token"],
 )
 
 SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
@@ -218,6 +220,7 @@ def register_user(payload: RegisterRequest, response: Response) -> dict:
     except Exception as error:
         _raise_auth_error(error)
     set_auth_cookies(response, token, csrf_token)
+    response.headers["X-CSRF-Token"] = csrf_token
     return profile
 
 
@@ -230,6 +233,7 @@ def login_user(payload: LoginRequest, response: Response) -> dict:
     except Exception as error:
         _raise_auth_error(error)
     set_auth_cookies(response, token, csrf_token)
+    response.headers["X-CSRF-Token"] = csrf_token
     return profile
 
 
