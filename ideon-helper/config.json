@@ -1,0 +1,47 @@
+{
+  "helper_token": "ideon-local-secure-token-2026",
+  "allowed_origins": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "applications": [
+    {
+      "id": "antigravity",
+      "name": "Antigravity",
+      "description": "Advanced Agentic IDE & Assistant",
+      "executable": "cmd.exe",
+      "args": [
+        "/c",
+        "start",
+        "antigravity"
+      ]
+    },
+    {
+      "id": "vscode",
+      "name": "Visual Studio Code",
+      "description": "Code Editor & IDE",
+      "executable": "code.cmd",
+      "args": []
+    },
+    {
+      "id": "terminal",
+      "name": "Windows Terminal",
+      "description": "Modern Command Line Interface",
+      "executable": "wt.exe",
+      "args": []
+    }
+  ],
+  "projects": [
+    {
+      "id": "anhs-yokoso-jitsuryoku",
+      "name": "ANHS // Yokoso Jitsuryoku",
+      "description": "Classroom of The Elite Project",
+      "working_directory": "C:\\SigmaProject\\cote-experience",
+      "executable": "pnpm",
+      "args": [
+        "dev"
+      ],
+      "local_url": "http://localhost:3001"
+    }
+  ]
+}

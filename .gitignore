@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+env/
+
+# Production & Build Outputs
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment & Secrets (Keep .env.example)
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# SQLite & Application Databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+backups/
+data/
+ideon-backend/data/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Temporary Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+cookies.txt
+
+# OS & Editor Specific Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Vercel
+.vercel
