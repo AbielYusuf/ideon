@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+:root {
+  /* Kuchiba Chisa × Japanese Academy Color Palette */
+  --chisa-deep-charcoal: #171719;
+  --chisa-school-black: #222124;
+  --chisa-crimson-red: #8E2638;
+  --chisa-ribbon-red: #A52A42;
+  --chisa-rose-text: #E58A9B;
+  --chisa-warm-ivory: #E8E3DC;
+  --chisa-soft-white: #F5F2EE;
+  --chisa-ash-grey: #77777D;
+  --chisa-muted-grey: #A6A1A0;
+
+  --background: #171719;
+  --foreground: #F5F2EE;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-chisa-charcoal: #171719;
+  --color-chisa-black: #222124;
+  --color-chisa-crimson: #8E2638;
+  --color-chisa-ribbon: #A52A42;
+  --color-chisa-rose: #E58A9B;
+  --color-chisa-ivory: #E8E3DC;
+  --color-chisa-white: #F5F2EE;
+  --color-chisa-ash: #77777D;
+  --color-chisa-muted: #A6A1A0;
+
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  background-color: #171719;
+  color: #F5F2EE;
+}
+
+/* Subtle Japanese editorial typography background.
+   The two pseudo-elements sit behind all content and replace the old grid. */
+.academy-grid {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #171719;
+  background-image:
+    linear-gradient(to right, rgba(119, 119, 125, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(119, 119, 125, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.academy-grid::before,
+.academy-grid::after {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  white-space: pre;
+  font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN",
+    "Noto Serif JP", "MS Mincho", serif;
+  font-weight: 200;
+  font-style: normal;
+  speak: never;
+  transform-origin: center;
+}
+
+/* Oversized, sparse ash glyphs — abstract watermark composition. */
+.academy-grid::before {
+  content: "藍          凪\A      響      ミ\A  榊        ひ\A        澪      カ";
+  inset: -10%;
+  font-size: clamp(6rem, 15vw, 13rem);
+  line-height: clamp(12rem, 32vh, 20rem);
+  letter-spacing: 0.12em;
+  word-spacing: clamp(4rem, 16vw, 14rem);
+  color: #8E8E96;
+  opacity: 0.05;
+  transform: rotate(-2.5deg);
+}
+
+/* Even larger crimson strokes, offset and partially clipped. */
+.academy-grid::after {
+  content: "    霞        ヲ\A  燈        ゆ\A      カ        藍\A  凪        ミ";
+  inset: -18%;
+  font-size: clamp(5rem, 12vw, 11rem);
+  line-height: clamp(11rem, 38vh, 24rem);
+  letter-spacing: 0.22em;
+  word-spacing: clamp(4rem, 18vw, 16rem);
+  color: #8E2638;
+  opacity: 0.035;
+  transform: rotate(3deg);
+}
+
+@media (max-width: 640px) {
+  .academy-grid::before {
+    font-size: clamp(4.5rem, 22vw, 7rem);
+    line-height: clamp(9rem, 26vh, 12rem);
+    letter-spacing: 0.06em;
+    word-spacing: clamp(2rem, 12vw, 5rem);
+    opacity: 0.045;
+  }
+
+  .academy-grid::after {
+    font-size: clamp(4rem, 18vw, 6rem);
+    line-height: clamp(9rem, 30vh, 13rem);
+    letter-spacing: 0.08em;
+    word-spacing: clamp(2rem, 14vw, 6rem);
+    opacity: 0.03;
+  }
+}
+
+/* Ruler Tick Line Texture */
+.ruler-ticks {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(142, 38, 56, 0.4) 0px,
+    rgba(142, 38, 56, 0.4) 1px,
+    transparent 1px,
+    transparent 8px,
+    rgba(166, 161, 160, 0.2) 8px,
+    rgba(166, 161, 160, 0.2) 9px,
+    transparent 9px,
+    transparent 16px
+  );
+  height: 4px;
+}
+
+/* Ribbon accent line */
+.ribbon-accent {
+  position: relative;
+}
+.ribbon-accent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #A52A42 0%, #8E2638 100%);
+  border-radius: 9999px;
+}
