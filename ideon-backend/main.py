@@ -119,6 +119,13 @@ def verify_csrf(request: Request) -> None:
             detail="Request origin is not allowed.",
         )
 
+    # The SPA is hosted on Vercel while the API is exposed through a separate
+    # Cloudflare Tunnel origin. The browser cannot reliably read the CSRF
+    # cookie across those sites, so the allowlisted Origin check is the CSRF
+    # boundary for the deployed SPA.
+    if origin in ALLOWED_ORIGINS:
+        return
+
     # Unauthenticated requests are rejected by get_current_user. Logout is
     # allowed to clear a broken session without a CSRF token.
     if not request.cookies.get(SESSION_COOKIE):
