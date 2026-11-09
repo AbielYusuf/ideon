@@ -161,6 +161,7 @@ def get_current_user(
     if (
         request.method in MUTATING_METHODS
         and request.url.path != "/api/auth/logout"
+        and request.headers.get("origin") not in ALLOWED_ORIGINS
     ):
         header_token = request.headers.get("x-csrf-token")
         if (
