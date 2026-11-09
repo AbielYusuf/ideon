@@ -30,7 +30,11 @@ COOKIE_SECURE = (
     os.environ.get("IDEON_COOKIE_SECURE", "").strip().lower() in _TRUTHY
     or os.environ.get("IDEON_ENV", "").strip().lower() == "production"
 )
-COOKIE_SAMESITE = "lax"
+# The deployed frontend and API live on different sites (Vercel and the
+# Cloudflare Tunnel), so production auth cookies must be allowed on
+# cross-site fetches. Local HTTP development keeps the browser-compatible
+# lax setting because SameSite=None requires Secure.
+COOKIE_SAMESITE = "none" if COOKIE_SECURE else "lax"
 
 # Argon2id is the PasswordHasher default. Explicit parameters keep hashes stable
 # and document the memory cost used at rest.
