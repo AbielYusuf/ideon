@@ -86,7 +86,14 @@ function ShortcutForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    await onSave({ name: name.trim(), url: url.trim(), category: category.trim() || undefined });
+    const normalizedUrl = /^https?:\/\//i.test(url.trim())
+      ? url.trim()
+      : `https://${url.trim()}`;
+    await onSave({
+      name: name.trim(),
+      url: normalizedUrl,
+      category: category.trim() || undefined,
+    });
   }
 
   return (
@@ -593,8 +600,8 @@ export default function QuickAccessPage() {
       const created = await createShortcut(data);
       setShortcuts((prev) => [created, ...prev]);
       setShowAddForm(false);
-    } catch {
-      alert("Failed to create shortcut.");
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Failed to create shortcut.");
     } finally {
       setSavingShortcut(false);
     }

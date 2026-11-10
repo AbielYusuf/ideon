@@ -299,6 +299,8 @@ class WebShortcutCreate(BaseModel):
     @classmethod
     def must_be_valid_http_url(cls, value: str) -> str:
         value = value.strip()
+        if "://" not in value:
+            value = f"https://{value}"
         if not (value.startswith("http://") or value.startswith("https://")):
             raise ValueError("URL must start with http:// or https://")
         return value
